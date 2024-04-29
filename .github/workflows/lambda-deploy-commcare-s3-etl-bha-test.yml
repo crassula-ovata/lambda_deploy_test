@@ -16,7 +16,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - name: Build binary
         run: |
-          zip deployment.zip main
+          zip deployment.zip master
 
       - name: deploy zip
         uses: ./
