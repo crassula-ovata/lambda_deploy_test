@@ -1,4 +1,4 @@
-name: Deploy Lambda Function Test
+name: lambda-deploy-commcare-s3-etl-bha-dev
 
 on: workflow_dispatch
 
@@ -7,28 +7,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2 # To fetch the current commit and its parent (so we can compare)
+    ###- name: Checkout Repository
+    ###  uses: actions/checkout@v2
+    ###  with:
+    ###    fetch-depth: 2 # To fetch the current commit and its parent (so we can compare)
 
     - name: Setup AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1 # Modify this to your desired AWS region
+        aws-region: us-east-1 
 
-    - name: Print changed files # To properly debug what is being deployed (It can be removed).
+    ###- name: Print changed files # To properly debug what is being deployed (It can be removed).
+    ###  run: |
+    ###    echo "List of changed files:" 
+    ###    echo $(git diff --name-only HEAD^ HEAD)
+    - name: Deploy Files
       run: |
-        echo "List of changed files:" 
-        echo $(git diff --name-only HEAD^ HEAD)
-    - name: Deploy Modified Files
-      run: |
-        # Constants
-        S3_BUCKET=ush-cjw-1
-        S3_KEY=lambda_deploy.zip
-        LAMBDA_FUNCTION_NAME=slu-test
+        S3_BUCKET=lambda-function-deploy-zip
+        S3_KEY=lambda-deploy-data-and-analytics-etl-bha-dev.zip
+        LAMBDA_FUNCTION_NAME=commcare-s3-etl-bha-dev
         # Download the existing zip from S3
         ###aws s3 cp s3://$S3_BUCKET/$S3_KEY existing_lambda.zip
         # Unzip the existing package
@@ -51,7 +50,6 @@ jobs:
         # Zip the directory again
         #####cd lambda_env
         #####zip -r ../updated_lambda.zip .
-        #####zip -r updated_lambda.zip .
         # the following will only look for .py files only in the current dir (no folder) #
         zip -r updated_lambda.zip *.py
         #####cd ..
