@@ -30,7 +30,7 @@ jobs:
         S3_KEY=lambda_deploy.zip
         LAMBDA_FUNCTION_NAME=slu-test
         # Download the existing zip from S3
-        aws s3 cp s3://$S3_BUCKET/$S3_KEY existing_lambda.zip
+        ###aws s3 cp s3://$S3_BUCKET/$S3_KEY existing_lambda.zip
         # Unzip the existing package
         ###unzip existing_lambda.zip -d lambda_env
         mkdir -d lambda_env
