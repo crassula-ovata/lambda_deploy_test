@@ -16,7 +16,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - name: Build binary
         run: |
-          zip deployment.zip master
+          go build -v -a -o main lambda_function.py && zip deployment.zip main
 
       - name: deploy zip
         uses: ./
