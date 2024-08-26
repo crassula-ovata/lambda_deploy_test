@@ -1,4 +1,4 @@
-name: lambda-deploy-commcare-s3-etl-bha-dev
+name: lambda-deploy-test
 
 on: workflow_dispatch
 
